@@ -1,8 +1,11 @@
 package com.sparta.sprintauth1.controller;
 
 
+import com.sparta.sprintauth1.dto.LoginRequestDto;
 import com.sparta.sprintauth1.dto.SignupRequestDto;
+import com.sparta.sprintauth1.repository.PostRepository;
 import com.sparta.sprintauth1.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -20,9 +23,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final PostRepository postRepository;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService,PostRepository postRepository) {
         this.userService = userService;
+        this.postRepository = postRepository;
     }
 
     @GetMapping("/user/login-page")
@@ -47,7 +52,17 @@ public class UserController {
         }
 
         userService.signup(requestDto);
-
         return "redirect:/api/user/login-page";
     }
+
+    @PostMapping("/user/login")
+    public String login(LoginRequestDto requestDto, HttpServletResponse res){
+        try {
+            userService.login(requestDto, res);
+        } catch (Exception e) {
+            return "redirect:/api/user/login-page?error";
+        }
+        return "redirect:/";
+    }
+
 }

@@ -1,14 +1,12 @@
 package com.sparta.sprintauth1.service;
 
 
-
 import com.sparta.sprintauth1.dto.LoginRequestDto;
 import com.sparta.sprintauth1.dto.SignupRequestDto;
 import com.sparta.sprintauth1.entity.User;
 import com.sparta.sprintauth1.entity.UserRoleEnum;
 import com.sparta.sprintauth1.jwt.JwtUtil;
 import com.sparta.sprintauth1.repository.UserRepository;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-
 public class UserService {
 
     private final UserRepository userRepository;
@@ -61,6 +58,7 @@ public class UserService {
 
         // 사용자 등록
         User user = new User(username, password, email, role);
+
         userRepository.save(user);
     }
 
